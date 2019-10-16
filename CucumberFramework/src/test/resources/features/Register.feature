@@ -5,7 +5,7 @@ Feature: Login into an application
 
   @Register_user
   Scenario: Login
-    Given test data is read from excel "Register" under "Sheet2"
+   Given test data is read from excel "Register" under "Sheet2"
     Then user clicks on Register button
     And user enters Contact Information
     And user enters Mailing Information
