@@ -1,10 +1,10 @@
-Feature: Login into an application
+Feature: Register into an application
 
   Background: User Navigates to application
     When User opens browser
 
   @Register_user
-  Scenario: Login
+  Scenario: Register
    Given test data is read from excel "Register" under "Sheet2"
     Then user clicks on Register button
     And user enters Contact Information

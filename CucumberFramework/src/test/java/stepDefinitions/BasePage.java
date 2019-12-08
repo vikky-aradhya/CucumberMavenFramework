@@ -17,14 +17,13 @@ import org.openqa.selenium.support.ui.Select;
 import com.cucumber.listener.Reporter;
 
 import genericFunction.GenericFunction;
-import genericFunction.Property;
 
 public class BasePage {
 	public static LinkedHashMap<String, String> testdataMap;
 	public static String scenarioName;
 	public static String description;
 	public static int rownum=1;
-	public static WebDriver driver;
+	public static WebDriver driver = null;
 	
 	GenericFunction gf = new GenericFunction();
 	
@@ -38,32 +37,10 @@ public class BasePage {
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 	
-	public void clickElement(String element, Property locator) throws Exception {
-		Thread.sleep(1000);
-		
-		try {
-			driver.findElement(locator.getLocator(element)).click();
-			Reporter.addStepLog("Element at \""+element+"\" clicked successfully");
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-	}
-	
-	public void sendKeys(String element, Property locator, String value) throws Exception {
-		Thread.sleep(1000);
-		
-		try {
-			driver.findElement(locator.getLocator(element)).sendKeys(value);
-			Reporter.addStepLog("Value \"" +value+ "\" entered successfully");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void selectByText(String element, Property locator, String value) throws Exception {
+	public void selectByText(WebElement locator, String value) throws Exception {
 		Thread.sleep(3000);
 		
-		Select select = new Select(driver.findElement(locator.getLocator(element)));
+		Select select = new Select(locator);
 		try {
 			select.selectByVisibleText(value);
 		} catch (Exception e) {
@@ -71,10 +48,10 @@ public class BasePage {
 		}
 	}
 	
-	public void selectByValue(String element, Property locator, String value) throws Exception {
+	public void selectByValue(WebElement locator, String value) throws Exception {
 		Thread.sleep(3000);
 		
-		Select select = new Select(driver.findElement(locator.getLocator(element)));
+		Select select = new Select(locator);
 		try {
 			select.selectByValue(value);
 		} catch (Exception e) {
@@ -82,10 +59,10 @@ public class BasePage {
 		}
 	}
 	
-	public void selectByIndex(String element, Property locator, int value) throws Exception {
+	public void selectByIndex(WebElement locator, int value) throws Exception {
 		Thread.sleep(3000);
 		
-		Select select = new Select(driver.findElement(locator.getLocator(element)));
+		Select select = new Select(locator);
 		try {
 			select.selectByIndex(value);
 		} catch (Exception e) {
@@ -115,25 +92,23 @@ public class BasePage {
 		}
 	}
 	
-	public void dragAndDrop(String source, String destination, Property locator) throws Exception{
+	public void dragAndDrop(WebElement source, WebElement destination) throws Exception{
 		Thread.sleep(3000);
 		
 		Actions action = new Actions(driver);
-		WebElement sourceValue = driver.findElement(locator.getLocator(source));
-		WebElement target = driver.findElement(locator.getLocator(destination));
 		try {
-			action.dragAndDrop(sourceValue, target).build().perform();
+			action.dragAndDrop(source, destination).build().perform();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void mouseHover(String element, Property locator) throws Exception {
+	public void mouseHover(WebElement locator) throws Exception {
 		Thread.sleep(3000);
 		
 		Actions action = new Actions(driver);
 		try {
-			action.moveToElement(driver.findElement(locator.getLocator(element))).build().perform();
+			action.moveToElement(locator).build().perform();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -147,18 +122,6 @@ public class BasePage {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-	}
-	
-	public String getText(String element, Property locator) throws Exception {
-		Thread.sleep(3000);
-		
-		String text = null;
-		try {
-			text = driver.findElement(locator.getLocator(element)).getText();
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		return text;
 	}
 	
 	public void readexceldata(String ScenarioName, String SheetName) throws Exception {

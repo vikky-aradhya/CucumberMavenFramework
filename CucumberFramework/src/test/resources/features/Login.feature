@@ -9,6 +9,6 @@ Feature: Login into an application
     And user enters the username
     And user enters the password
     Then user clicks on Login
+    And verify the Login Page title
     And fill in the flight details
     Then choose the preferences
-    And verify the Login Page title
